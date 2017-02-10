@@ -15,35 +15,32 @@ def selectBroadcastPower():
    display.clear()
    print(i)
 
-def startBroadcasting(broadcastPower :int, objectID :int):
- random.seed(running_time())
- uniqueID=str(random.randint(4502,9999))
- stringToSend=str(uniqueID)+":"+str(objectID+1) #Do the +1 because the receiver starts at 1
- messageToPrint="I am broadcasting "+objectIDs[objectID]+", at a power level of "+str(broadcastPower)+", with a unique ID of "+str(uniqueID)+"."
- print(messageToPrint)
-# display.scroll(messageToPrint, delay=100, wait=True)
- sleep(750)
+def startBroadcasting(broadcastPower):
  display.clear()
- radio.config(power=broadcastPower, length=8)
+ radio.config(power=broadcastPower)
+ i=0
+ print(i)
+ display.show(str(i),delay=250,clear=True,wait=True)
+ radio.send(i)
  while True:
-  radio.send(stringToSend)
-  sleep(250)
+  sleep(100) #Debounce
+  if button_a.was_pressed():
+   i-=1
+   print(i)
+   display.show(str(i),delay=250,clear=True,wait=True)
+   radio.send(i)
+  if button_b.was_pressed():
+   i+=1
+   print(i)
+   display.show(str(i),delay=250,clear=True,wait=True)
+   radio.send(i)
 
-
-button_a.was_pressed()
-button_b.was_pressed()
-print("In main")
+message="Select my broadcast power using button a then press button b to continu"
+print(message)
+display.scroll(message,delay=100,wait=false)
 while True:
- display.scroll("Select my broadcast power using button a then press b to continue.", delay=100, wait=False)
  while broadcastPower == "":
   if button_a.was_pressed():
    print("Select broadcast power")
    broadcastPower=selectBroadcastPower()
- display.clear()
- display.scroll("Select the object that I should represent using button a then press b to continue", delay=100, wait=False)
- while objectID == "":
-  if button_a.was_pressed():
-   print("Select object")
-   objectID=selectObjectID()
- display.clear()
- startBroadcasting(broadcastPower, objectID)
+ startBroadcasting(broadcastPower)
