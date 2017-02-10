@@ -1,18 +1,10 @@
 from microbit import *
 import radio
-import random
-broadcastPower=""
-objectID=""
-radio.on()
-
-objectIDs=["Forward", "Up stairs", "door", "Left", "right", "Destination reached"
-]
 
 def selectBroadcastPower():
  display.clear()
  i=0
- button_a.was_pressed()
- button_b.was_pressed()
+ print(i)
  while True:
   display.show(str(i), wait=False)
   if button_b.was_pressed():
@@ -21,22 +13,7 @@ def selectBroadcastPower():
    i=i+1
    if i > 7: i=0
    display.clear()
-   print("Showing %i" % i)
-
-def selectObjectID():
- display.clear()
- i=0
- button_a.was_pressed()
- button_b.was_pressed()
- while True:
-  display.show(objectIDs[i], delay=100, wait=False)
-  if button_b.was_pressed():
-   return i
-  if button_a.was_pressed():
-   i=i+1
-   if i > 5: i=0
-   display.clear()
-   print("Showing %i" % int(i+1))
+   print(i)
 
 def startBroadcasting(broadcastPower :int, objectID :int):
  random.seed(running_time())
