@@ -1,4 +1,4 @@
-import microbit
+from microbit import *
 import radio
 
 def selectBroadcastPower():
@@ -17,19 +17,19 @@ def selectBroadcastPower():
 
 def startListening(broadcastPower):
  radio.on()
- radio.config(power=broadcastPower)
+ radio.config(power=broadcastPower,length=32)
  while True:
   received=radio.receive()
   if received != None: #Make sure we've received something
    print(received)
-   display.show(str(received),delay=250,clear=True,wait=True)
+   display.show(str(received),delay=200,clear=True,wait=False)
 
-message="Select my broadcast power using button a then press button b to continu"
+
+message="I am a receiver. 		Select my broadcast power using button a then press button b to continu"
 print(message)
-display.scroll(message,delay=100,wait=false)
+display.scroll(message,delay=100,wait=False)
 while True:
  if button_a.was_pressed():
-  print("Select broadcast power")
   broadcastPower=selectBroadcastPower()
   break
 

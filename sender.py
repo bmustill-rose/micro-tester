@@ -1,6 +1,8 @@
 from microbit import *
 import radio
 
+broadcastPower=""
+
 def selectBroadcastPower():
  display.clear()
  i=0
@@ -17,30 +19,30 @@ def selectBroadcastPower():
 
 def startBroadcasting(broadcastPower):
  display.clear()
- radio.config(power=broadcastPower)
+ radio.on()
+ radio.config(power=broadcastPower,length=32)
  i=0
  print(i)
- display.show(str(i),delay=250,clear=True,wait=True)
- radio.send(i)
+ display.show(str(i),delay=200,clear=True,wait=False)
+ radio.send(str(i))
  while True:
-  sleep(100) #Debounce
+  sleep(75) #Debounce
   if button_a.was_pressed():
    i-=1
    print(i)
-   display.show(str(i),delay=250,clear=True,wait=True)
-   radio.send(i)
+   display.show(str(i),delay=200,clear=True,wait=False)
+   radio.send(str(i))
   if button_b.was_pressed():
    i+=1
    print(i)
-   display.show(str(i),delay=250,clear=True,wait=True)
-   radio.send(i)
+   display.show(str(i),delay=200,clear=True,wait=False)
+   radio.send(str(i))
 
-message="Select my broadcast power using button a then press button b to continu"
+message="I am a sender. Select my broadcast power using button a then press button b to continu"
 print(message)
-display.scroll(message,delay=100,wait=false)
+display.scroll(message,delay=100,wait=False)
 while True:
  while broadcastPower == "":
   if button_a.was_pressed():
-   print("Select broadcast power")
    broadcastPower=selectBroadcastPower()
  startBroadcasting(broadcastPower)
